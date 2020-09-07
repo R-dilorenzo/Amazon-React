@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+//import per wrap
+import { StateProvider } from './Components/StateProvider';
+import reducer, { initialState } from './Components/reducer';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/**wrappo intera React APP <App /> in StateProvider che è il dataLayer che tiene traccia di informazioni evitando il binding */}
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <App />
+    </StateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
