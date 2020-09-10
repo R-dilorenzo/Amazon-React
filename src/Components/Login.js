@@ -103,9 +103,9 @@ function Login() {
                 </div>
                 <div className="form">
                     <h5>Email</h5>
-                    <input value={email} onChange={event => setEmail(event.target.value)} type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"></input>
+                    <input value={email} onChange={event => setEmail(event.target.value)} type="email" placeholder="your@email.com" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"></input>
                     <h5>Password</h5>
-                    <input value={password} onChange={event => setPassword(event.target.value)} type="password" min="5"></input>
+                    <input value={password} onChange={event => setPassword(event.target.value)} type="password" placeholder="psw di almeno 3 caratteri"></input>
                     <button onMouseDown={SingIn} onMouseUp={SingInForm} className="login__signIn">Login</button>
                 </div>
                 <br/>
