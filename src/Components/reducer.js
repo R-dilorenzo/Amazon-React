@@ -7,7 +7,8 @@ import RogueOne from '../img/rogueOne.jpg'
 
 export const initialState={
     basket:[],
-    user:null,
+    user:[],
+    isRegister:false,
     prodotti:[ 
     {
         id:"1" ,
@@ -166,6 +167,75 @@ const reducer = (state,action) => {
                 };
                 break;
               
+            case 'REGISTER_USER':
+                let boolR=false;
+
+                const register_to_check =[];
+                register_to_check.push(action.email);
+                register_to_check.push(action.password);
+
+                let item_string = JSON.stringify(register_to_check);
+                if(state.user.length ==0){
+                    boolR=true;
+                    return{
+                        ...state,
+                        user: [...state.user,register_to_check],
+                        isRegister: boolR,
+                    }
+                }else{
+                                    
+                    let contain = state.user.some((elem) => {
+                        return JSON.stringify(elem) === item_string;
+                    });
+                    //if contain false => elemento non presente
+                    if(!contain){
+                        boolR=true;
+                        return{
+                            ...state,
+                            user: [...state.user,register_to_check],
+                            isRegister: boolR,
+                        }
+                    }else {
+                        boolR=false;
+                        return {
+                            ...state,
+                            isRegister:boolR,
+                        }
+                    }
+                }
+                break;
+
+            case 'LOGIN_USER':
+                let bool=false;
+                const login_to_check =[action.email,action.password];
+                
+                let item_as_string = JSON.stringify(login_to_check);
+
+                let contains = state.user.some((ele) => {
+                    return JSON.stringify(ele) === item_as_string;
+                });
+                console.log("CONTAINS => ",contains);
+                if(contains==true){
+                    bool=true;
+                }else {
+                    bool=false;
+                }
+
+                return{
+                    ...state,
+                    isRegister: bool,
+                }
+                break;
+            
+            case 'LOGOUT_USER':
+                const boolL=false;
+
+                return {
+                    ...state,
+                    isRegister:boolL,
+                }
+                break;
+  
         //caso di default da inserire sempre 
         default:
             return state;

@@ -3,7 +3,7 @@ import amazonLogo from '../img/amazon-logo.jpg';
 //importo il file css
 import '../CSS/HeaderCSS.css';
 //importo link per il logo che deve ritornare alla homepage
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 //import per icona serch attraverso la libreria MaterialUI
 import SearchIcon from '@material-ui/icons/Search';
 //import per icona carrello attraverso la libreria MaterialUI
@@ -15,8 +15,18 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 function Header() {
-    const [{ basket, prodotti }, dispatch] = useStateValue();
+    const [{ basket, prodotti, isRegister }, dispatch] = useStateValue();
 
+    let history = useHistory();
+
+    const logInOut= () => {
+        if(isRegister){
+            dispatch({
+                type: "LOGOUT_USER",
+            });
+            history.push("/");
+        }
+    }
     return (
         <nav className="header">
             {/**logo */}
@@ -43,10 +53,10 @@ function Header() {
             </div>
             {/**link */}
             <div className="header__nav">
-                <Link to="/login" className="header__link">
-                    <div className="header__navOption">
+                <Link to={!isRegister && "/login"} className="header__link">
+                    <div onClick={logInOut} className="header__navOption">
                         <span className="navOption1">Hello</span>
-                        <span className="navOption2">Login In</span>
+                        <span className="navOption2">{isRegister ? "Log Out" : "Login In"}</span>
                     </div>
                 </Link>
 
@@ -56,6 +66,7 @@ function Header() {
                         <span className="navOption2">e ordini</span>
                     </div>
                 </Link>
+
 
                 <Link to="/" className="header__link">
                     <div className="header__navOption">
